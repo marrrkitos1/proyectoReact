@@ -1,29 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import Cotizador from './components/Cotizador.jsx';
-import Historial from './components/Historial.jsx';
-import './App.css';
+  import React, { useState, useEffect} from 'react';
+  import Cotizador from './components/Cotizador.jsx';
+  import Historial from './components/Historial.jsx';
+  import './styles/App.css';
 
-const costoM2 = 35.86;
+  const App = () => {
+    const [historial, setHistorial] = useState([]);
+    const [btnEnviarVisible, setBtnEnviarVisible] = useState(false);
 
-const App = () => {
+    useEffect(() => {
+      const storedHistorial = JSON.parse(localStorage.getItem('historial')) || [];
+      setHistorial(storedHistorial);
+    }, []);
 
-  return (
-    <div>
-      <h1 className="titleSeguros">Seguros del hogar 🏡</h1>
+    useEffect(() => {
+      localStorage.setItem('historial', JSON.stringify(historial));
+    }, [historial]);
 
-      <Cotizador/>
+    return (
+      <div className='container'>
+        <div className="topDiv">
+          <h1 className="titleSeguros">Seguros del hogar 🏡</h1>
+          <a className='aHistorial'><h1 className="historial" title='Mostrar Historial'>📋</h1></a>
+        </div>
+        <div className="containerCotizador">
+          <Cotizador
+            setHistorial={setHistorial}
+            setBtnEnviarVisible={setBtnEnviarVisible}
+          />
+        </div>
+        {/* <div className="containerHistorial">
+          <Historial
+            historial={historial}
+            btnEnviarVisible={btnEnviarVisible}
+            setHistorial={setHistorial}
+          />
+        </div> */}
+      </div>
+    );
+  };
 
-      <Historial/>
-    </div>
-  );
-};
-
-const alerta = (mensaje) => {
-  alert(`${mensaje}`);
-};
-
-const toast = () => {
-  alert('Cotización guardada.');
-};
-
-export default App;
+  export default App;
