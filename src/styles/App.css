@@ -18,9 +18,6 @@
     text-align: center;
     padding: 1vw;
 }
-.aHistorial {
-    list-style: none;
-}
 .historial {
     cursor: pointer;
 }
@@ -111,11 +108,11 @@
     color: #273a2d;
     font-size: 1.7vw;
 }
-.btnHistorial {
+.btnHistorial, .btnBorrarHistorial{
     cursor: pointer;
     font-size: 1.7vw;
     margin-bottom: 0.5vw;
 }
-.btnHistorial:hover {
+.btnHistorial:hover, .btnBorrarHistorial:hover {
     transform: scale(1.2);
 }

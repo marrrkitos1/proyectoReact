@@ -1,28 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import CotizadorLogic from '../../public/js/CotizadorLogic';
 
-const Cotizador = () => {
+const Cotizador = ({ setNuevoHistorial }) => {
     const [selectPropiedad, setSelectPropiedad] = useState('...');
     const [selectUbicacion, setSelectUbicacion] = useState('...');
     const [inputMetros2, setInputMetros2] = useState(20);
     const [btnEnviarVisible, setBtnEnviarVisible] = useState(false);
     const [datos, setDatos] = useState([]);
     const [poliza, setPoliza] = useState();
-    const [historial, setHistorial] = useState([]);
+
     const cotizadorLogic = new CotizadorLogic(selectPropiedad, selectUbicacion, inputMetros2);
 
-    const fetchData = async () => {
-        try {
-            const response = await fetch('/js/datos.json');
-            const datos = await response.json();
-            setDatos(datos);
-        } catch (error) {
-            alert('Se ha producido un error. Intente nuevamente, por favor.');
-            console.error('Se ha producido un error inesperado. Intente nuevamente por favor.', error);
-        }
+    const guardarEnHistorialLocal = () => {  
+        setNuevoHistorial()      
+        console.log(nuevoHistorial);
     };
 
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('/js/datos.json');
+                const datos = await response.json();
+                setDatos(datos);
+            } catch (error) {
+                alert('Se ha producido un error. Intente nuevamente, por favor.');
+                console.error('Se ha producido un error inesperado. Intente nuevamente por favor.', error);
+            }
+        };
+
         fetchData();
     }, []);
 
@@ -40,19 +45,6 @@ const Cotizador = () => {
         }
     };
 
-    const guardarEnHistorialLocal = () => {
-        const cotizacion = {
-            propiedad: selectPropiedad,
-            ubicacion: selectUbicacion,
-            metrosCuadrados: inputMetros2,
-            poliza: cotizadorLogic.cotizarPoliza(),
-        };
-
-        const historialLocal = JSON.parse(localStorage.getItem('historial')) || [];
-        const nuevoHistorial = [...historialLocal, cotizacion];
-        localStorage.setItem('historial', JSON.stringify(nuevoHistorial));
-        setHistorial(nuevoHistorial);
-    }
     return (
         <div className='cotizador'>
             <div className='title'><p id='datosSolicitados'>Completa los datos solicitados</p></div>
@@ -105,7 +97,7 @@ const Cotizador = () => {
                 <div className="cotizacionResultado">
                     <p className='precioEstimado'><strong>Precio estimado $ {poliza}</strong></p>
                     {btnEnviarVisible && <a onClick={guardarEnHistorialLocal} className='btnHistorial' title='Guardar en Historial'>💾</a>}
-                </div>                
+                </div>
             </div>
         </div>
     );
