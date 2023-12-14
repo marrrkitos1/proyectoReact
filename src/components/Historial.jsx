@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../styles/historial.css';
 
 const Historial = () => {
@@ -25,20 +25,20 @@ const Historial = () => {
                     </tr>
                 </thead>
                 <tbody className='tablaBody'>
-                    {historialLocalActualizado.map((nuevaCotizacion, index) => (
+                    {historialLocalActualizado.map((datosCotizacion, index) => (
                         <tr key={index}>
-                            <td>{nuevaCotizacion.fecha}</td>
-                            <td>{nuevaCotizacion.propiedad}</td>
-                            <td>{nuevaCotizacion.ubicacion}</td>
-                            <td>{nuevaCotizacion.metrosCuadrados}</td>
-                            <td>{nuevaCotizacion.poliza}</td>
+                            <td>{datosCotizacion.fecha}</td>
+                            <td>{datosCotizacion.propiedad}</td>
+                            <td>{datosCotizacion.ubicacion}</td>
+                            <td>{datosCotizacion.metrosCuadrados}</td>
+                            <td>{datosCotizacion.poliza}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
 
             <div className="funcionesAdicionales">
-                <a className='btnBorrarHistorial' onClick={borrarHistorial}><i class="bi bi-trash3-fill"></i></a>
+                <a className='btnBorrarHistorial' onClick={borrarHistorial}><i className="bi bi-trash3-fill"></i></a>
             </div>
         </div>
     );

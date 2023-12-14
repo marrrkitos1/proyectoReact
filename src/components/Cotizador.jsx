@@ -8,6 +8,8 @@ const Cotizador = () => {
     const [btnEnviarVisible, setBtnEnviarVisible] = useState(false);
     const [datos, setDatos] = useState([]);
     const [poliza, setPoliza] = useState();
+    const [propiedadSeleccionada, setPropiedadSeleccionada] = useState('...');
+    const [ubicacionSeleccionada, setUbicacionSeleccionada] = useState('...');
     const cotizadorLogic = new CotizadorLogic(selectPropiedad, selectUbicacion, inputMetros2);
 
     const realizarCotizacion = () => {
@@ -29,16 +31,16 @@ const Cotizador = () => {
 
         const fechaActual = new Date();
         const fechaFormateada = fechaActual.toLocaleString();
-    
-        const nuevaCotizacion = {
+
+        const datosCotizacion = {
             fecha: fechaFormateada,
-            propiedad: selectPropiedad,
-            ubicacion: selectUbicacion,
+            propiedad: propiedadSeleccionada,
+            ubicacion: ubicacionSeleccionada,
             metrosCuadrados: inputMetros2,
             poliza: poliza,
-        };
+        }
     
-        const nuevoHistorialLocal = ([...historialLocal, nuevaCotizacion]);
+        const nuevoHistorialLocal = ([...historialLocal, datosCotizacion]);
     
         localStorage.setItem('historial', JSON.stringify(nuevoHistorialLocal));
     };
@@ -68,6 +70,7 @@ const Cotizador = () => {
                     id="propiedad"
                     onChange={(e) => {
                         setSelectPropiedad(e.target.value);
+                        setPropiedadSeleccionada(e.target.options[e.target.selectedIndex].text);
                     }}
                     value={selectPropiedad}
                 >
@@ -83,6 +86,7 @@ const Cotizador = () => {
                     id="ubicacion"
                     onChange={(e) => {
                         setSelectUbicacion(e.target.value);
+                        setUbicacionSeleccionada(e.target.options[e.target.selectedIndex].text);
                     }}
                     value={selectUbicacion}
                 >
@@ -100,6 +104,7 @@ const Cotizador = () => {
                     value={inputMetros2}
                     onChange={(e) => {
                         setInputMetros2(e.target.value);
+                        setUbicacionSeleccionada(e.target.value);
                     }}
                     min="20"
                     max="500"
