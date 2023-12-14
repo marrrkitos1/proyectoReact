@@ -1,20 +1,19 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/historial.css';
 
 const Historial = () => {
-
     const historialLocalActualizado = JSON.parse(localStorage.getItem('historial')) || [];
-    console.log(historialLocalActualizado);
+    const navigate = useNavigate();
 
     const borrarHistorial = () => {
         localStorage.clear();
         window.location.reload();
-        historialLocalActualizado = [];
     }
 
     return (
         <div className="div-historial">
-            <h1 className="titleCotizaciones">Historial de Cotizaciones 📋</h1>
+            <h1 className="titleCotizaciones">Historial de Cotizaciones</h1>
             <table className="tabla">
                 <thead className='tablaHead'>
                     <tr>
@@ -40,7 +39,7 @@ const Historial = () => {
 
             <div className="funcionesAdicionales">
                 <a className='btnBorrarHistorial' onClick={borrarHistorial}><i class="bi bi-trash3-fill"></i></a>
-                <a href="./index.html" className='volverLink'><button className="btnVolver">Volver</button></a></div>
+            </div>
         </div>
     );
 };

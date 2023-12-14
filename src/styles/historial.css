@@ -8,20 +8,20 @@
     justify-content: center;
     align-items: center;
     gap: 1vw;
+    background-color: #c8ad8d;
+    border-radius: 1vw;
 }
 
 .titleCotizaciones {
-    font-size: 3.5vw;
+    font-size: 2.5vw;
     font-weight: 400;
-    color: #ebe6ea;
+    color: #273a2d;
     text-align: center;
     padding: 1vw;
 }
 
 .tabla {
     width: 70%;
-    background-color: #c8ad8d;
-    border-radius: 1vw;
     padding: 1vw;
 }
 
@@ -48,7 +48,7 @@ tr td {
     padding: 1vw;
     border-radius: 1vw;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     width: 50%;
     gap: 1vw;
@@ -62,22 +62,6 @@ tr td {
 .bi-trash3-fill:hover {
     color: #273a2d;
 }
-.btnVolver {
-    border: 0.1vw solid #273a2d;
-    background-color: #fff;
-    height: 3vw;
-    font-size: 1.1vw;
-    cursor: pointer;
-    border-radius: 0.5vw;
-    width: 5vw;
-}
-
-.btnVolver:hover {
-    background-color: #273a2d;
-    color: #ebe6ea;
-    font-size: 1.3vw;
-}
-.btnBorrarHistorial:hover,
-.volverLink:hover {
+.btnBorrarHistorial:hover {
     transform: scale(1.2);
 }
