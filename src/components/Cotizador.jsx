@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CotizadorLogic from '../../public/js/CotizadorLogic';
+import CotizadorLogic from '../../public/js/CotizadorLogic.js';
 
 const Cotizador = () => {
     const [selectPropiedad, setSelectPropiedad] = useState('...');
