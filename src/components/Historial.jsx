@@ -8,7 +8,7 @@ const Historial = () => {
 
     const borrarHistorial = () => {
         localStorage.clear();
-        window.location.reload();
+        navigate('.', { replace: true });
     }
 
     return (
