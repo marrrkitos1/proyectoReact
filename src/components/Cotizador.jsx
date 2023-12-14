@@ -1,20 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import CotizadorLogic from '../../public/js/CotizadorLogic';
 
-const Cotizador = ({ setNuevoHistorial }) => {
+const Cotizador = () => {
     const [selectPropiedad, setSelectPropiedad] = useState('...');
     const [selectUbicacion, setSelectUbicacion] = useState('...');
     const [inputMetros2, setInputMetros2] = useState(20);
     const [btnEnviarVisible, setBtnEnviarVisible] = useState(false);
     const [datos, setDatos] = useState([]);
     const [poliza, setPoliza] = useState();
-
     const cotizadorLogic = new CotizadorLogic(selectPropiedad, selectUbicacion, inputMetros2);
 
-    const guardarEnHistorialLocal = () => {  
-        setNuevoHistorial()      
-        console.log(nuevoHistorial);
+    const realizarCotizacion = () => {
+        handleCotizacionFinalizada();
     };
+
+    const handleCotizacionFinalizada = () => {
+        setTimeout(() => {
+            alert('Cotización realizada correctamente');
+            setTimeout(() => {
+                setPoliza(cotizadorLogic.cotizarPoliza());
+                setBtnEnviarVisible(true);
+            }, 500);
+        }, 2500);
+    };
+
+    const guardarEnHistorialLocal = () => {
+        const historialLocal = JSON.parse(localStorage.getItem('historial')) || [];
+
+        const fechaActual = new Date();
+        const fechaFormateada = fechaActual.toLocaleString();
+    
+        const nuevaCotizacion = {
+            fecha: fechaFormateada,
+            propiedad: selectPropiedad,
+            ubicacion: selectUbicacion,
+            metrosCuadrados: inputMetros2,
+            poliza: poliza,
+        };
+    
+        const nuevoHistorialLocal = ([...historialLocal, nuevaCotizacion]);
+    
+        localStorage.setItem('historial', JSON.stringify(nuevoHistorialLocal));
+    };
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,20 +58,6 @@ const Cotizador = ({ setNuevoHistorial }) => {
 
         fetchData();
     }, []);
-
-    const realizarCotizacion = () => {
-        if (cotizadorLogic.datosCompletos(selectPropiedad, selectUbicacion, inputMetros2)) {
-            setTimeout(() => {
-                alert('Cotización realizada correctamente');
-                setTimeout(() => {
-                    setPoliza(cotizadorLogic.cotizarPoliza());
-                    setBtnEnviarVisible(true);
-                }, 500);
-            }, 2500);
-        } else {
-            alert('Debes completar todos los datos en pantalla.');
-        }
-    };
 
     return (
         <div className='cotizador'>
@@ -92,11 +106,11 @@ const Cotizador = ({ setNuevoHistorial }) => {
                     required
                 />
                 <div className="btnContainer">
-                    <button onClick={realizarCotizacion} className='btnCotizar'>Cotizar</button>
+                    <button onClick={realizarCotizacion} className='btnCotizar' alt='Cotizador'>Cotizar</button>
                 </div>
                 <div className="cotizacionResultado">
-                    <p className='precioEstimado'><strong>Precio estimado $ {poliza}</strong></p>
-                    {btnEnviarVisible && <a onClick={guardarEnHistorialLocal} className='btnHistorial' title='Guardar en Historial'>💾</a>}
+                    <p className='precioEstimado' alt='Poliza estimada'><strong>Precio estimado $ {poliza}</strong></p>
+                    {btnEnviarVisible && <a onClick={guardarEnHistorialLocal} className='btnHistorial' title='Guardar en Historial' alt='Historial'>💾</a>}
                 </div>
             </div>
         </div>

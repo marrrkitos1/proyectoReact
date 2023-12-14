@@ -1,30 +1,46 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import '../styles/historial.css';
 
-const Historial = ({selectPropiedad, selectUbicacion, inputMetros2, poliza}) => {
-    const [nuevoHistorial, setNuevoHistorial] = useState([]);
-    const historialLocal = JSON.parse(localStorage.getItem('historial')) || [];
+const Historial = () => {
 
-    const nuevaCotizacion = {
-        propiedad: selectPropiedad,
-        ubicacion: selectUbicacion,
-        metrosCuadrados: inputMetros2,
-        poliza: poliza,
-    };
+    const historialLocalActualizado = JSON.parse(localStorage.getItem('historial')) || [];
+    console.log(historialLocalActualizado);
 
-    const nuevoHistorialActualizado = [...historialLocal, nuevaCotizacion];
-    console.log(nuevoHistorial);
+    const borrarHistorial = () => {
+        localStorage.clear();
+        window.location.reload();
+        historialLocalActualizado = [];
+    }
 
     return (
         <div className="div-historial">
-            <h2 className="center separador">Historial de Cotizaciones</h2>
-            <ul>
-                {nuevoHistorial && nuevoHistorial.map((cotizacion, index) => (
-                    <li key={index}>
-                        Propiedad: {cotizacion.propiedad}, Ubicación: {cotizacion.ubicacion}, Metros Cuadrados: {cotizacion.metrosCuadrados}, Precio estimado: ${cotizacion.poliza}
-                    </li>
-                ))}
-                <a className='btnBorrarHistorial'>🗑</a>
-            </ul>
+            <h1 className="titleCotizaciones">Historial de Cotizaciones 📋</h1>
+            <table className="tabla">
+                <thead className='tablaHead'>
+                    <tr>
+                        <th>Fecha de cotización</th>
+                        <th>Propiedad</th>
+                        <th>Ubicación</th>
+                        <th>Metros cuadrados</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody className='tablaBody'>
+                    {historialLocalActualizado.map((nuevaCotizacion, index) => (
+                        <tr key={index}>
+                            <td>{nuevaCotizacion.fecha}</td>
+                            <td>{nuevaCotizacion.propiedad}</td>
+                            <td>{nuevaCotizacion.ubicacion}</td>
+                            <td>{nuevaCotizacion.metrosCuadrados}</td>
+                            <td>{nuevaCotizacion.poliza}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+            <div className="funcionesAdicionales">
+                <a className='btnBorrarHistorial' onClick={borrarHistorial}><i class="bi bi-trash3-fill"></i></a>
+                <a href="./index.html" className='volverLink'><button className="btnVolver">Volver</button></a></div>
         </div>
     );
 };
